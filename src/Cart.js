@@ -68,7 +68,7 @@ const BookingList = () => {
                                             <strong>Return Time:</strong> {new Date(booking.flight.returnTime).toLocaleString()}
                                         </p>
                                         <p>
-                                            <strong>Price:</strong> ${booking.flight.amount.toFixed(2)}
+                                            <strong>Price:</strong> ${booking.flight.amount.toFixed(0)}
                                         </p>
                                     </div>
                                     <div className="flex justify-end">
