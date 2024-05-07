@@ -24,8 +24,13 @@ const InitPayment = ({ bookingIds }) => {
     const [style, setStyle] = useState("disabled")
  
     const toggleText = () => {
-        setTextState((state) => (state === "Initiate Payment" ? "Payment Succesfull" : "Initiate Payment"));
+        // setTextState((state) => (state === "Initiate Payment" ? "Payment Succesfull" : "Initiate Payment"));
 
+        if (textState === "Initiate Payment" && !paymentStatus) {
+            setTextState("Payment Successful");
+            setStyle("disabled");
+            handleButtonClick();
+        }
     };
 
 
