@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CancelBookingButton from './CancelBookingButton';
+import RefundButton from './RefundButton';
 
 const InitPayment = ({ bookingIds }) => {
-    // Retrieve and parse the stored statuses from localStorage or initialize an empty object
     const initializeStatuses = () => {
         const storedStatuses = localStorage.getItem('paymentStatuses');
         return storedStatuses ? JSON.parse(storedStatuses) : {};
     };
 
-    // Initialize local state with retrieved statuses
     const [paymentStatuses, setPaymentStatuses] = useState(initializeStatuses);
 
-    // Update localStorage whenever paymentStatuses state changes
     useEffect(() => {
         localStorage.setItem('paymentStatuses', JSON.stringify(paymentStatuses));
     }, [paymentStatuses]);
 
-    // Function to handle payment initiation
     const handleButtonClick = async () => {
         try {
-            // Initiate payments for multiple booking IDs
             const response = await axios.post('http://localhost:8083/api/payments/initiate', bookingIds);
             const paymentResults = response.data;
 
-            // Update payment statuses for each booking ID in the response
             const updatedStatuses = { ...paymentStatuses };
             paymentResults.forEach(({ bookingId, paymentStatus }) => {
                 updatedStatuses[bookingId] = paymentStatus;
@@ -36,7 +31,6 @@ const InitPayment = ({ bookingIds }) => {
         }
     };
 
-    // Helper function to get button text and styles dynamically
     const getButtonState = (bookingId) => {
         const isPaid = paymentStatuses[bookingId] || false;
         return isPaid
@@ -57,7 +51,11 @@ const InitPayment = ({ bookingIds }) => {
                         >
                             {text}
                         </button>
-                        <CancelBookingButton bookingId={bookingId} paymentStatus={paymentStatuses[bookingId] || false} />
+                        {paymentStatuses[bookingId] ? (
+                            <RefundButton bookingId={bookingId} />
+                        ) : (
+                            <CancelBookingButton bookingId={bookingId} paymentStatus={paymentStatuses[bookingId] || false} />
+                        )}
                     </div>
                 );
             })}
