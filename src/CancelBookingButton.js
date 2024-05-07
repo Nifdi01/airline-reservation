@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CancelBookingButton = ({ bookingId, paymentStatus }) => {
+const CancelBookingButton = ({ bookingId }) => {
     const [isCanceling, setIsCanceling] = useState(false);
     const [cancellationSuccess, setCancellationSuccess] = useState(false);
     const [cancellationError, setCancellationError] = useState(null);
@@ -31,10 +31,10 @@ const CancelBookingButton = ({ bookingId, paymentStatus }) => {
         <div>
             <button
                 className={`bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline 
-                ${isCanceling ? 'opacity-50 cursor-not-allowed' : ''}
-                ${paymentStatus ? 'bg-gray-500 text-black hover:bg-gray-500':''}`}
+                ${isCanceling ? 'opacity-50 cursor-not-allowed' : ''}`}
+                
                 onClick={handleCancellation}
-                disabled={isCanceling || paymentStatus} // Disable button if isCanceling or paymentStatus is true
+                disabled={isCanceling} // Disable button if isCanceling or paymentStatus is true
             >
                 {isCanceling ? 'Cancelling...' : 'Cancel Booking'}
             </button>

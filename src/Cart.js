@@ -71,8 +71,8 @@ const BookingList = () => {
                                         </p>
                                     </div>
                                     <div className="flex justify-end">
-                                        <InitPayment bookingIds={[booking.flight.id]} />
-                                        {/* <CancelBookingButton bookingId={booking.id}/> */}
+                                        <InitPayment bookingIds={[booking.id]} />
+                                        {/* <CancelBookingButton bookingId={booking.flight.id}/> */}
                                     </div>
                                 </div>
                             </li>
